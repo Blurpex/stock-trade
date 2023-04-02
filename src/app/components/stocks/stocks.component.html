@@ -1,7 +1,13 @@
 <div class="search-bar">
-  <input type="search" placeholder="enter a stock ticker">
-  <button><span class="material-icons">search</span></button>
+  <input type="search" placeholder="enter a stock ticker" [(ngModel)]="searchInput">
+  <button (click)="goToStock()"><span class="material-icons">search</span></button>
 </div>
 
-<div class="chart" echarts [options]="options"></div>
-
+<form class="filters">
+  <input type="radio" id="day" name="filter" value="INTRADAY" [(ngModel)]="timeSeries" checked>
+  <label for="day">day</label>
+  <input type="radio" id="week" name="filter" value="WEEKLY" [(ngModel)]="timeSeries">
+  <label for="week">week</label>
+  <input type="radio" id="month" name="filter" value="MONTHLY" [(ngModel)]="timeSeries">
+  <label for="month">month</label>
+</form>

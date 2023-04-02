@@ -4,7 +4,7 @@
 }
 input {
   width: 50%;
-  margin: 20px 10px;
+  margin: 15px;
   padding: 15px;
   border-radius: 15px;
   background: #171b26;
@@ -21,7 +21,7 @@ input:focus {
 }
 
 /* submit button */
-button {
+.search-bar button {
   border-style: none;
   cursor: pointer;
   background: #e1ad01;
@@ -29,7 +29,7 @@ button {
   padding: 12px;
   box-shadow: 0 5px #999;
 }
-button:active {
+.search-bar button:active {
   box-shadow: 0 2px #666;
   transform: translateY(5px);
   background: #ad8403;
@@ -39,11 +39,24 @@ span {
   font-weight: bold;
 }
 
-/* chart */
-.chart {
-  border: solid #57c276;
-  background: rgba(87, 194, 118, 0.07);
+/* filters*/
+.filters{
+  text-align: center;
+  font-weight: bold;
+}
+.filters label {
+  display: inline-block;
+  padding: 15px;
+  margin: 0 5px 15px;
+  border: solid #e1ad01;
   border-radius: 15px;
-  width: 75%;
-  margin: 0 auto;
+  color: #e1ad01;
+
+}
+.filters input[type="radio"] {
+  display: none;
+}
+.filters input[type="radio"]:checked + label {
+  background: #e1ad01;
+  color: #171b26;
 }

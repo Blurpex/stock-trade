@@ -8,19 +8,23 @@ import { StocksComponent } from './components/stocks/stocks.component';
 import { AboutComponent } from './components/about/about.component';
 import { NgxEchartsModule } from "ngx-echarts";
 import { HttpClientModule } from "@angular/common/http";
+import { StockDetailComponent } from './components/stock-detail/stock-detail.component';
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     StocksComponent,
-    AboutComponent
+    AboutComponent,
+    StockDetailComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     NgxEchartsModule.forRoot({echarts: () => import('echarts')}),
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

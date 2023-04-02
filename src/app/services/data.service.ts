@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { DataModel } from "../../models/DataModel";
 import { Observable } from "rxjs";
 import { HttpClient } from "@angular/common/http";
 
@@ -8,12 +7,18 @@ import { HttpClient } from "@angular/common/http";
 })
 export class DataService {
 
-  url: string = "https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=TSLA&interval=15min&apikey=R4L3WJVV5NRNNCEH"
+  private url: string = "";
 
   constructor(private http: HttpClient) {}
 
-  fetchData():Observable<DataModel> {
-    return this.http.get<DataModel>(this.url);
+  fetchData(symbol: string, time: string):Observable<any> {
+    this.url = "https://www.alphavantage.co/" +
+      "query?function=TIME_SERIES_" + time +
+      "&symbol=" + symbol +
+      "&interval=15min" +
+      "&apikey=R4L3WJVV5NRNNCEH";
+    console.log(this.url)
+    return this.http.get<any>(this.url);
   }
 }
 
