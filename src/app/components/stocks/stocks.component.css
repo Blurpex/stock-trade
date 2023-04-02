@@ -1,0 +1,49 @@
+/* search bar */
+.search-bar {
+  text-align: center;
+}
+input {
+  width: 50%;
+  margin: 20px 10px;
+  padding: 15px;
+  border-radius: 15px;
+  background: #171b26;
+  border: solid #e1ad01;
+  font-size: large;
+  color: #e1ad01;
+}
+input::placeholder {
+  font-size: large;
+}
+input:focus {
+  background: rgba(173, 132, 3, 0.28);
+  outline: none;
+}
+
+/* submit button */
+button {
+  border-style: none;
+  cursor: pointer;
+  background: #e1ad01;
+  border-radius: 15px;
+  padding: 12px;
+  box-shadow: 0 5px #999;
+}
+button:active {
+  box-shadow: 0 2px #666;
+  transform: translateY(5px);
+  background: #ad8403;
+}
+span {
+  color: #171b26;
+  font-weight: bold;
+}
+
+/* chart */
+.chart {
+  border: solid #57c276;
+  background: rgba(87, 194, 118, 0.07);
+  border-radius: 15px;
+  width: 75%;
+  margin: 0 auto;
+}

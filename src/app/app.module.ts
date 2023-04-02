@@ -6,6 +6,8 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
 import { StocksComponent } from './components/stocks/stocks.component';
 import { AboutComponent } from './components/about/about.component';
+import { NgxEchartsModule } from "ngx-echarts";
+import { HttpClientModule } from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -16,7 +18,9 @@ import { AboutComponent } from './components/about/about.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    NgxEchartsModule.forRoot({echarts: () => import('echarts')}),
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

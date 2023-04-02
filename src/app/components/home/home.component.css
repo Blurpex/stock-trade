@@ -1,0 +1,37 @@
+/* subheader */
+.subheader h1 {
+  margin: 10px;
+  padding: 10px 20px;
+  border: solid #e1ad01;
+  color: #e1ad01;
+  border-radius: 15px;
+  display: inline-block;
+}
+
+/* card */
+.card {
+  width: 150px;
+  border: solid #57c276;
+  transition: 0.3s;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 20px;
+  cursor: pointer;
+  display: inline-block;
+}
+.card:hover {
+  box-shadow: 0 0 #57c276;
+  transform: translateY(5px);
+}
+.title {
+  background: #57c276;
+  border-radius: 10px;
+  text-align: center;
+}
+.content {
+  color: #57c276;
+}
+.content p span {
+  text-align: right;
+  float: right;
+}
