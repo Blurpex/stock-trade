@@ -8,7 +8,7 @@ import { HttpClient } from "@angular/common/http";
 })
 export class DataService {
 
-  url: string = "https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=IBM&interval=15min&apikey=R4L3WJVV5NRNNCEH"
+  url: string = "https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=TSLA&interval=15min&apikey=R4L3WJVV5NRNNCEH"
 
   constructor(private http: HttpClient) {}
 
