@@ -15,6 +15,7 @@ export class StockDetailComponent implements OnInit{
   options!: EChartsOption;
   valueData: number[] = [];
   timeData: string[] = [];
+  overview: any = [];
 
   constructor(private dataService: DataService, private route:ActivatedRoute) {
     this.ticker = this.route.snapshot.params['ticker'];
@@ -28,17 +29,17 @@ export class StockDetailComponent implements OnInit{
 
         let data:Object = {};
 
-        if(this.timeSeries == "INTRADAY") {
-          console.log(result["Time Series (15min)"]);
-          data = result["Time Series (15min)"];
+        if(this.timeSeries =='INTRADAY') {
+          console.log(result['Time Series (15min)']);
+          data = result['Time Series (15min)'];
         }
-        else if(this.timeSeries == "WEEKLY") {
-          console.log(result["Weekly Time Series"]);
-          data = result["Weekly Time Series"];
+        else if(this.timeSeries == 'WEEKLY') {
+          console.log(result['Weekly Time Series']);
+          data = result['Weekly Time Series'];
         }
-        else if(this.timeSeries == "MONTHLY") {
-          console.log(result["Monthly Time Series"]);
-          data = result["Monthly Time Series"];
+        else if(this.timeSeries == 'MONTHLY') {
+          console.log(result['Monthly Time Series']);
+          data = result['Monthly Time Series'];
         }
 
         Object.entries(data).forEach(([date, value])=> {
@@ -78,6 +79,16 @@ export class StockDetailComponent implements OnInit{
             },
           ],
         };
+      });
+
+    this.dataService
+      .fetchInfo(this.ticker)
+      .subscribe(result => {
+        console.log(result)
+        Object.entries(result).forEach(elem => {
+          if(elem[0] != 'Description')
+            this.overview.push(elem);
+        });
       });
   }
 }

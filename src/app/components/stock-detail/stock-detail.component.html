@@ -1,1 +1,7 @@
 <div class="chart" echarts [options]="options"></div>
+
+<div class="container">
+  <p *ngFor="let data of overview">
+    {{ data[0] }} : <span>{{ data[1] }}</span>
+  </p>
+</div>

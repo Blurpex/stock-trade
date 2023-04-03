@@ -17,3 +17,4 @@ export class StocksComponent {
     this.router.navigate(['stocks', this.searchInput, this.timeSeries]);
   }
 }
+

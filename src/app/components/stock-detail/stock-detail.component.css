@@ -6,3 +6,25 @@
   width: 75%;
   margin: 10px auto;
 }
+
+/* overview */
+.container {
+  width: 75%;
+  /*background: rgba(173, 132, 3, 0.24);*/
+  border: solid #e1ad01;
+  border-radius: 15px;
+  margin: 0 auto;
+}
+.container p {
+  width: 44%;
+  display: inline-block;
+  margin: 5px 30px 5px 30px;
+  font-weight: bold;
+  color: #e1ad01;
+}
+.container p span {
+  text-align: right;
+  float: right;
+  font-weight: normal;
+  color: #57c276;
+}

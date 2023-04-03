@@ -7,18 +7,24 @@ import { HttpClient } from "@angular/common/http";
 })
 export class DataService {
 
-  private url: string = "";
-
   constructor(private http: HttpClient) {}
 
   fetchData(symbol: string, time: string):Observable<any> {
-    this.url = "https://www.alphavantage.co/" +
+    const url :string = "https://www.alphavantage.co/" +
       "query?function=TIME_SERIES_" + time +
       "&symbol=" + symbol +
       "&interval=15min" +
       "&apikey=R4L3WJVV5NRNNCEH";
-    console.log(this.url)
-    return this.http.get<any>(this.url);
+    console.log(url)
+    return this.http.get<any>(url);
+  }
+
+  fetchInfo(symbol: string) {
+    const url :string =  "https://www.alphavantage.co" +
+      "/query?function=OVERVIEW" +
+      "&symbol=" + symbol +
+      "&apikey=R4L3WJVV5NRNNCEH";
+    return this.http.get<any>(url);
   }
 }
 
