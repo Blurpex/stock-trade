@@ -13,7 +13,7 @@ export class DataService {
     const url :string = "https://www.alphavantage.co/" +
       "query?function=TIME_SERIES_" + time +
       "&symbol=" + symbol +
-      "&interval=15min" +
+      "&interval=5min" +
       "&apikey=R4L3WJVV5NRNNCEH";
     console.log("info", url);
     return this.http.get<any>(url);

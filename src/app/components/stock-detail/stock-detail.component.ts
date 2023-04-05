@@ -10,161 +10,151 @@ import { ActivatedRoute } from "@angular/router";
 })
 export class StockDetailComponent implements OnInit{
 
+  // instance variables
   ticker: string = "";
   timeSeries: string = "";
   options!: EChartsOption;
-  valueData:any = [];
-  openData: any = [];
-  closeData: any = [];
-  highData: any = [];
-  lowData: any = [];
-  volumeData: any = [];
-  candlestickData: any = [];
-  timeData: string[] = [];
   overview: Array<[string, unknown]> = [];
 
+  // instantiate service and get params from router
   constructor(private dataService: DataService, private route:ActivatedRoute) {
     this.ticker = this.route.snapshot.params['ticker'];
     this.timeSeries = this.route.snapshot.params['time'];
   }
 
+  // get values from API
   ngOnInit(): void {
-    this.dataService
-      .fetchData(this.ticker, this.timeSeries)
-      .subscribe( result => {
+    this.getValues();
+  }
 
-        let data = Object.entries(result).at(1)?.at(1);
-        // @ts-ignore
-        Object.entries(data)
-          .forEach(([key, value])=> {
-            this.timeData.push(key);
-            // @ts-ignore
-            this.valueData.push(value);
+  // get values from API
+  getValues(): void {
+  this.dataService.fetchData(this.ticker, this.timeSeries)
+    .subscribe( result => {
+
+      let values: number[][] = [];
+      let time: string[] = [];
+      let volume: number[] = [];
+
+      // @ts-ignore
+      Object.entries(Object.entries(result).at(1)?.at(1))
+        .forEach(([key, value])=> {
+          time.push(key);
+          // @ts-ignore
+          let tempData: number[] = [];
+          // @ts-ignore
+          tempData.push(value['1. open']);
+          // @ts-ignore
+          tempData.push(value['4. close']);
+          // @ts-ignore
+          tempData.push(value['3. low']);
+          // @ts-ignore
+          tempData.push(value['2. high']);
+          values.push(tempData);
+          // @ts-ignore
+          volume.push(value['5. volume']);
+      });
+
+      values = values.reverse();
+      time = time.reverse();
+      volume = volume.reverse();
+
+      this.dataService.fetchInfo(this.ticker)
+        .subscribe(result => {
+          Object.entries(result).forEach(elem => {
+            if(elem[0] != 'Description') this.overview.push(elem);
           });
-
-        this.valueData.forEach((elem: any) => {
-          // this.openData.push(elem['1. open']);
-          // this.lowData.push(elem['2. high']);
-          // this.highData.push(elem['3. low']);
-          // this.closeData.push(elem['4. close']);
-          this.volumeData.push(elem['5. volume']);
         });
 
-        this.valueData.forEach((elem:any) => {
-          let data: any = [];
-          data.push(elem['1. open']);
-          data.push(elem['4. close']);
-          data.push(elem['3. low']);
-          data.push(elem['2. high']);
-          this.candlestickData.push(data);
-        });
+      // graph the chart
+      this.graphChart(values, time, volume);
+    });
+  }
 
-
-
-
-
-
-
-
-        this.options = {
-          title: { text: "Stock", left: 0 },
-          legend: {
-            bottom: 10,
-            left: 'center',
-            data: ['Open', 'Low', 'High', 'Close']
+  // graph the chart with values from API
+  graphChart(values: number[][], time: string[], volume: number[]): void {
+    this.options = {
+      title: { text: "Stock", left: 0 },
+      legend: {
+        bottom: 10,
+        left: 'center',
+        data: [this.ticker.toUpperCase(), 'Volume']
+      },
+      grid: { left: '5%', right: '3%', bottom: '15%' },
+      dataZoom: [
+        { type: 'inside' },
+        { show: true, type: 'slider', top: '90%' }
+      ],
+      backgroundColor: '#171b26',
+      tooltip: {
+        show: true,
+        trigger: 'axis',
+        axisPointer: { type: 'cross' },
+        backgroundColor: '#171b26'
+      },
+      toolbox: {
+        feature: {
+          dataZoom: { yAxisIndex: false },
+          magicType: { type:['line', 'bar'] }
+        },
+        iconStyle: { borderColor: '#e1ad01' }
+      },
+      brush: {
+        xAxisIndex: 'all',
+        brushLink: 'all',
+        outOfBrush: { colorAlpha: 0.1 }
+      },
+      xAxis: [
+        {
+          data: time,
+          boundaryGap: false,
+          splitArea: { show: false },
+          splitLine: { show: true, lineStyle: { color: 'rgba(119,119,119,0.14)'} },
+        },
+        {
+          data: time,
+          boundaryGap: false,
+          axisLine: { onZero: false },
+          axisTick: { show: false },
+          splitLine: { show: false },
+          axisLabel: { show: false },
+        }
+      ],
+      yAxis: [
+        {
+          scale: true,
+          splitArea: { show: false },
+          splitLine: { show: true, lineStyle: { color: 'rgba(119,119,119,0.14)'} },
+        },
+        {
+          scale: true,
+          splitNumber: 1,
+          axisLabel: { show: false },
+          axisLine: { show: false },
+          axisTick: { show: false },
+          splitLine: { show: false }
+        }
+      ],
+      series: [
+        {
+          name: this.ticker.toUpperCase(),
+          type: 'candlestick',
+          data: values,
+          itemStyle: {
+            color: '#00da3c',
+            color0: '#ec0000',
+            borderColor: '#008F28',
+            borderColor0: '#8A0000'
           },
-
-          grid: { bottom: '15%' },
-
-          dataZoom: [
-            { type: 'inside' },
-            { show: true, type: 'slider', top: '90%' }
-          ],
-
-          backgroundColor: '#171b26',
-
-          tooltip: {
-            show: true,
-            trigger: 'axis',
-            axisPointer: { type: 'cross' },
-            backgroundColor: '#171b26',
-          },
-
-          toolbox: {
-            feature: {
-              dataZoom: { yAxisIndex: false },
-              magicType: { type:['line', 'bar'] }
-            },
-            iconStyle: { borderColor: '#e1ad01' }
-          },
-
-          xAxis: [
-            {
-              scale: true,
-              data: this.timeData,
-              splitArea: { show: false },
-              splitLine: { show: true, lineStyle: { color: 'rgba(119,119,119,0.14)'} }
-            },
-            {
-              data: this.timeData,
-              boundaryGap: false,
-              axisLine: { onZero: false },
-              axisTick: { show: false },
-              splitLine: { show: false },
-              axisLabel: { show: false },
-            }
-            ],
-
-          yAxis: [
-            {
-              scale: true,
-              splitArea: { show: false },
-              splitLine: { show: true, lineStyle: { color: 'rgba(119,119,119,0.14)'} }
-            },
-            {
-              scale: true,
-              splitNumber: 2,
-              axisLabel: { show: false },
-              axisLine: { show: false },
-              axisTick: { show: false },
-              splitLine: { show: false }
-            }
-          ],
-
-          series: [
-            {
-              // name: '',
-              type: 'candlestick',
-              data: this.candlestickData.reverse(),
-              itemStyle: {
-                color: '#ec0000',
-                color0: '#00da3c',
-                borderColor: '#8A0000',
-                borderColor0: '#008F28'
-              },
-            },
-            {
-              name: 'Volume',
-              type: 'bar',
-              xAxisIndex: 1,
-              yAxisIndex: 1,
-              data: this.volumeData.reverse()
-            }
-            // { name: 'Open', data: this.openData.reverse(), type: 'line' },
-            // { name: 'Low', data: this.lowData.reverse(), type: 'line' },
-            // { name: 'High', data: this.highData.reverse(), type: 'line' },
-            // { name: 'Close', data: this.closeData.reverse(), type: 'line' },
-          ],
-        };
-      });
-
-    this.dataService
-      .fetchInfo(this.ticker)
-      .subscribe(result => {
-        Object.entries(result).forEach(elem => {
-          if(elem[0] != 'Description')
-            this.overview.push(elem);
-        });
-      });
+        },
+        {
+          name: 'Volume',
+          type: 'bar',
+          xAxisIndex: 1,
+          yAxisIndex: 1,
+          data: volume
+        }
+      ],
+    };
   }
 }
