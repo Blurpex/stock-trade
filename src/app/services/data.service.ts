@@ -15,7 +15,7 @@ export class DataService {
       "&symbol=" + symbol +
       "&interval=15min" +
       "&apikey=R4L3WJVV5NRNNCEH";
-    console.log(url)
+    console.log("info", url);
     return this.http.get<any>(url);
   }
 
@@ -24,6 +24,7 @@ export class DataService {
       "/query?function=OVERVIEW" +
       "&symbol=" + symbol +
       "&apikey=R4L3WJVV5NRNNCEH";
+    console.log("data", url);
     return this.http.get<any>(url);
   }
 }
