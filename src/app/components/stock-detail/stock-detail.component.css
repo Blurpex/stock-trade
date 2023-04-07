@@ -6,7 +6,7 @@
 /* overview */
 .container {
   width: 90%;
-  border: solid #e1ad01;
+  border: solid #F2542D;
   border-radius: 15px;
   margin: 0 auto;
 }
@@ -15,7 +15,7 @@
   display: inline-block;
   margin: 5px 30px 5px 30px;
   font-weight: bold;
-  color: dodgerblue;
+  color: #F2542D;
 }
 .container p span {
   text-align: right;

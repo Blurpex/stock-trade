@@ -59,15 +59,15 @@ export class StockDetailComponent implements OnInit{
       time = time.reverse();
       volume = volume.reverse();
 
+      // graph the chart
+      this.graphChart(values, time, volume);
+
       this.dataService.fetchInfo(this.ticker)
         .subscribe(result => {
           Object.entries(result).forEach(elem => {
             if(elem[0] != 'Description') this.overview.push(elem);
           });
         });
-
-      // graph the chart
-      this.graphChart(values, time, volume);
     });
   }
 
