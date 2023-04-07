@@ -17,10 +17,17 @@ export class StocksComponent {
 
   constructor(private dataService: DataService, private router:Router) {}
 
+  // navigates to a given stock
   goToStock(query: any) {
     this.router.navigate(['stocks', query["1. symbol"], this.timeSeries]);
   }
 
+  // navigates to a given stock
+  navigateToStock(query: string) {
+    this.router.navigate(['stocks', query, this.timeSeries]);
+  }
+
+  // shows search results
   showSuggestions() {
     this.dataService.fetchQuery(this.searchQuery)
       .subscribe(result => {
@@ -28,5 +35,4 @@ export class StocksComponent {
         this.showSearch = true;
       });
   }
-
 }

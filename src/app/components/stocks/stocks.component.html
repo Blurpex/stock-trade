@@ -1,6 +1,6 @@
 <div class="search">
   <input type="search" placeholder="enter a stock ticker" [(ngModel)]="searchQuery" (change)="showSuggestions()">
-  <button class="search-btn" (click)="goToStock(searchQuery)"><span class="material-icons">search</span></button>
+  <button class="search-btn"><span class="material-icons">search</span></button>
 </div>
 
 <form class="filters">
@@ -29,6 +29,6 @@
 </div>
 
 <h1 class="subheader">Trending Stocks</h1>
-  <div class="horizontal-scroll">
-    <div class="trending-stock" *ngFor="let stock of trendingStocks">${{ stock }}</div>
-  </div>
+<div class="horizontal-scroll">
+  <div class="trending-stock" *ngFor="let stock of trendingStocks" (click)="navigateToStock(stock)">${{ stock }}</div>
+</div>
