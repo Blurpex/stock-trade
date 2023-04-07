@@ -1,40 +1,39 @@
 /* search bar */
-.search-bar {
+.search {
   text-align: center;
 }
-input {
+.search input {
   width: 50%;
   margin: 15px;
   padding: 15px;
   border-radius: 15px;
   background: #171b26;
-  border: solid #F9DC5C;
+  border: solid #EE585A;
   font-size: large;
-  color: #F9DC5C;
+  color: #EE585A;
 }
-input::placeholder {
+.search input::placeholder {
   font-size: large;
 }
-input:focus {
-  background: rgba(249, 220, 92, 0.28);
+.search input:focus {
+  background: rgba(238, 88, 90, 0.18);
   outline: none;
 }
 
 /* submit button */
-.search-bar button {
+.search-btn {
   border-style: none;
   cursor: pointer;
-  background: #F9DC5C;
+  background: #EE585A;
   border-radius: 15px;
   padding: 12px;
-  box-shadow: 2px 3px rgb(124, 119, 119);
+  box-shadow: 3px 3px rgba(243, 102, 103, 0.49);
 }
-.search-bar button:active {
-  box-shadow: 0 2px #666;
+.search-btn:active {
   transform: translateY(5px);
-  background: #76909d;
+  background: #ef3839;
 }
-.search-bar span {
+.search span {
   color: #171b26;
   font-weight: bold;
 }
@@ -48,54 +47,75 @@ input:focus {
   display: inline-block;
   padding: 15px;
   margin: 0 5px 15px;
-  border: solid #F9DC5C;
+  border: solid #EE585A;
   border-radius: 15px;
-  color: #F9DC5C;
-
+  color: #EE585A;
+  cursor: pointer;
 }
 .filters input[type="radio"] {
   display: none;
 }
 .filters input[type="radio"]:checked + label {
-  background: #F9DC5C;
+  background: #EE585A;
   color: #171b26;
 }
 
 /* subheader */
-.subheader h1 {
+.subheader {
   margin: 10px;
   padding: 2px 10px;
-  /*border: solid #2D7DD2;*/
   color: #57c276;
-  /*background: #2D7DD2;*/
-  /*border-radius: 15px;*/
-  display: inline-block;
+  display: block;
 }
 
 /* card */
 .card {
   width: 150px;
-  border: solid #FCBCB8;
+  border: solid #7F95D1;
   transition: 0.3s;
-  padding: 10px;
-  margin: 20px;
+  padding: 0 10px 0 10px;
+  margin: 10px;
   border-radius: 20px;
   cursor: pointer;
   display: inline-block;
+  overflow: auto;
 }
 .card:hover {
-  box-shadow: 0 0 #FCBCB8;
+  box-shadow: 0 0 #7F95D1;
   transform: translateY(5px);
 }
 .title {
-  background: #FCBCB8;
+  background: #7F95D1;
   border-radius: 10px;
   text-align: center;
 }
 .content {
-  color: #FCBCB8;
+  color: white;
 }
 .content p span {
   text-align: right;
   float: right;
+  font-weight: bold;
+  color: #7F95D1;
+}
+
+/* trending stocks */
+.trending-stock {
+  background: #7F95D1;
+  border-radius: 10px;
+  text-align: center;
+  display: inline-block;
+  padding: 10px 30px;
+  margin: 5px;
+  font-weight: bold;
+  color: #171b26;
+  font-size: x-large;
+}
+
+/* horizontal scroll */
+.horizontal-scroll {
+  margin: 0 10px 0 10px;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  white-space: nowrap;
 }

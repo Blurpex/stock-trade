@@ -1,11 +1,6 @@
-<div class="search-bar">
+<div class="search">
   <input type="search" placeholder="enter a stock ticker" [(ngModel)]="searchQuery" (change)="showSuggestions()">
-<!--  <button (click)="goToStock()"><span class="material-icons">search</span></button>-->
-  <div *ngIf="showSearch">
-    <button *ngFor="let result of queryResults" (click)="goToStock(result)" >
-      {{ result["1. symbol"] }} : {{ result["2. name"] }}
-    </button>
-  </div>
+  <button class="search-btn" (click)="goToStock(searchQuery)"><span class="material-icons">search</span></button>
 </div>
 
 <form class="filters">
@@ -17,19 +12,23 @@
   <label for="month">month</label>
 </form>
 
-<div class="subheader">
-  <h1>Trending Stocks</h1>
+<div *ngIf="showSearch">
+  <h1 class="subheader">Search Results</h1>
+  <div class="horizontal-scroll">
+    <div class="card" *ngFor="let query of queryResults" (click)="goToStock(query)">
+      <div class="title">
+        <h1>${{ query["1. symbol"] }}</h1>
+      </div>
+      <div class="content">
+        <p>Currency<span>{{ query["8. currency"] }}</span></p>
+        <p>Time Zone<span>{{ query["7. timezone"] }}</span></p>
+        <p>Type<span>{{ query["3. type"] }}</span></p>
+      </div>
+    </div>
+  </div>
 </div>
 
-<!--<div class="card">-->
-<!--  <div class="title">-->
-<!--    <h1>$TSLA</h1>-->
-<!--  </div>-->
-<!--  <div class="content">-->
-<!--    <p>Open<span>$113</span></p>-->
-<!--    <p>Close<span>$134</span></p>-->
-<!--    <p>High<span>$250</span></p>-->
-<!--    <p>Low<span>$97</span></p>-->
-<!--  </div>-->
-<!--</div>-->
-
+<h1 class="subheader">Trending Stocks</h1>
+  <div class="horizontal-scroll">
+    <div class="trending-stock" *ngFor="let stock of trendingStocks">${{ stock }}</div>
+  </div>

@@ -13,9 +13,9 @@ export class StocksComponent {
   timeSeries: string = "INTRADAY";
   showSearch: boolean = false;
   queryResults: any = [];
+  trendingStocks: string[] = ['TSLA', 'AAPL', 'AMZN', 'NVDA', 'GOOG', 'META', 'MSFT', 'AMD']
 
-  constructor(private dataService: DataService, private router:Router) {
-  }
+  constructor(private dataService: DataService, private router:Router) {}
 
   goToStock(query: any) {
     this.router.navigate(['stocks', query["1. symbol"], this.timeSeries]);
@@ -30,4 +30,3 @@ export class StocksComponent {
   }
 
 }
-
