@@ -1,6 +1,11 @@
 <div class="search-bar">
-  <input type="search" placeholder="enter a stock ticker" [(ngModel)]="searchInput">
-  <button (click)="goToStock()"><span class="material-icons">search</span></button>
+  <input type="search" placeholder="enter a stock ticker" [(ngModel)]="searchQuery" (change)="showSuggestions()">
+<!--  <button (click)="goToStock()"><span class="material-icons">search</span></button>-->
+  <div *ngIf="showSearch">
+    <button *ngFor="let result of queryResults" (click)="goToStock(result)" >
+      {{ result["1. symbol"] }} : {{ result["2. name"] }}
+    </button>
+  </div>
 </div>
 
 <form class="filters">
@@ -16,15 +21,15 @@
   <h1>Trending Stocks</h1>
 </div>
 
-<div class="card">
-  <div class="title">
-    <h1>$TSLA</h1>
-  </div>
+<!--<div class="card">-->
+<!--  <div class="title">-->
+<!--    <h1>$TSLA</h1>-->
+<!--  </div>-->
 <!--  <div class="content">-->
 <!--    <p>Open<span>$113</span></p>-->
 <!--    <p>Close<span>$134</span></p>-->
 <!--    <p>High<span>$250</span></p>-->
 <!--    <p>Low<span>$97</span></p>-->
 <!--  </div>-->
-</div>
+<!--</div>-->
 

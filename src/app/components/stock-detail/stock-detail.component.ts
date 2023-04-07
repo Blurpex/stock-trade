@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { EChartsOption } from "echarts";
 import { DataService } from "../../services/data.service";
 import { ActivatedRoute } from "@angular/router";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-stock-detail',
@@ -10,68 +11,64 @@ import { ActivatedRoute } from "@angular/router";
 })
 export class StockDetailComponent implements OnInit{
 
-  // instance variables
+  /* instance variables */
+  //service
+  valueService: Observable<any>;
+  infoService: Observable<any>;
+  // data
   ticker: string = "";
-  timeSeries: string = "";
   options!: EChartsOption;
   overview: Array<[string, unknown]> = [];
 
-  // instantiate service and get params from router
+  /* instantiate service and get params from router */
   constructor(private dataService: DataService, private route:ActivatedRoute) {
     this.ticker = this.route.snapshot.params['ticker'];
-    this.timeSeries = this.route.snapshot.params['time'];
+    this.valueService = this.dataService.fetchData(this.ticker, this.route.snapshot.params['time']);
+    this.infoService = this.dataService.fetchInfo(this.ticker);
   }
 
-  // get values from API
+  /* start the services */
   ngOnInit(): void {
-    this.getValues();
+      this.valueService.subscribe( result => this.getData(result));
+      this.infoService.subscribe(result => this.getInfo(result));
   }
 
-  // get values from API
-  getValues(): void {
-  this.dataService.fetchData(this.ticker, this.timeSeries)
-    .subscribe( result => {
+  /* get values about stock from API */
+  getData(data: Observable<any>):void {
+    let values: number[][] = [];
+    let time: string[] = [];
+    let volume: number[] = [];
 
-      let values: number[][] = [];
-      let time: string[] = [];
-      let volume: number[] = [];
-
-      // @ts-ignore
-      Object.entries(Object.entries(result).at(1)?.at(1))
-        .forEach(([key, value])=> {
-          time.push(key);
-          // @ts-ignore
-          let tempData: number[] = [];
-          // @ts-ignore
-          tempData.push(value['1. open']);
-          // @ts-ignore
-          tempData.push(value['4. close']);
-          // @ts-ignore
-          tempData.push(value['3. low']);
-          // @ts-ignore
-          tempData.push(value['2. high']);
-          values.push(tempData);
-          // @ts-ignore
-          volume.push(value['5. volume']);
+    // @ts-ignore
+    Object.entries(Object.entries(data).at(1).at(1))
+      .forEach(([key, value])=> {
+        time.push(key);
+        let tempData: number[] = [];
+        // @ts-ignore
+        tempData.push(value['1. open']);
+        // @ts-ignore
+        tempData.push(value['4. close']);
+        // @ts-ignore
+        tempData.push(value['3. low']);
+        // @ts-ignore
+        tempData.push(value['2. high']);
+        values.push(tempData);
+        // @ts-ignore
+        volume.push(value['5. volume']);
       });
 
-      values = values.reverse();
-      time = time.reverse();
-      volume = volume.reverse();
+    // graph the chart
+    this.graphChart(values.reverse(), time.reverse(), volume.reverse());
+  }
 
-      // graph the chart
-      this.graphChart(values, time, volume);
-
-      this.dataService.fetchInfo(this.ticker)
-        .subscribe(result => {
-          Object.entries(result).forEach(elem => {
-            if(elem[0] != 'Description') this.overview.push(elem);
-          });
-        });
+  /* get overview about the company from the API */
+  getInfo(info: Observable<any>): void {
+    Object.entries(info).forEach(elem => {
+      if(elem[0] != 'Description') this.overview.push(elem);
     });
   }
 
-  // graph the chart with values from API
+  /* graph the chart with values from API */
   graphChart(values: number[][], time: string[], volume: number[]): void {
     this.options = {
       title: { text: "Stock", left: 0 },
