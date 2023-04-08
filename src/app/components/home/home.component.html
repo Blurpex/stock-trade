@@ -1,0 +1,13 @@
+<h1 class="subheader">News</h1>
+
+<div class="horizontal-scroll">
+  <div class="card" *ngFor="let news of newsList">
+    <img [src]="news.banner_image" alt="banner image" />
+    <div class="card-body">
+      <span class="tag">{{ news.topics[0].topic }}</span>
+      <h4>{{ news.title }}</h4>
+      <p>{{ news.authors }} | {{ news.source }}</p>
+      <p>{{ news.summary }}</p>
+    </div>
+  </div>
+</div>

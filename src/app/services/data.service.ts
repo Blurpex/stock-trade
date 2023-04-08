@@ -9,6 +9,15 @@ export class DataService {
 
   constructor(private http: HttpClient) {}
 
+  // gets general news
+  fetchNews():Observable<any> {
+    const url: string = "https://www.alphavantage.co/" +
+      "query?function=NEWS_SENTIMENT" +
+      "&apikey=R4L3WJVV5NRNNCEH";
+    console.log("news", url);
+    return this.http.get(url);
+  }
+
   // finds the closest companies to the search
   fetchQuery(query:string):Observable<any> {
     const url:string = "https://www.alphavantage.co/" +
